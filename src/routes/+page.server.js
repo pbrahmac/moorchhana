@@ -3,6 +3,9 @@ import { findDistanceArray } from '$lib/utils';
 import { db } from '$lib/firebase';
 import { onValue, ref } from 'firebase/database';
 
+// disable ssr (for firebase)
+export const ssr = false;
+
 /** @type {import('./$types').PageServerLoad} */
 export async function load() {
 	// fetch from Firebase
