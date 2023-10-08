@@ -1,0 +1,10 @@
+{
+	"hosting": {
+		"public": "noorchhana",
+		"rewrites": [],
+		"predeploy": ["npm run build"]
+	},
+	"functions": {
+		"source": "functions"
+	}
+}
