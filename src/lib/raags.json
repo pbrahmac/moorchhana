@@ -1,0 +1,37 @@
+[
+	{
+		"id": 0,
+		"name": "Durga",
+		"notes": ["S", "R", "M", "P", "D", "s"]
+	},
+	{
+		"id": 1,
+		"name": "Dhani",
+		"notes": ["S", "g", "M", "P", "n", "s"]
+	},
+	{
+		"id": 2,
+		"name": "Bhupali",
+		"notes": ["S", "R", "G", "P", "D", "s"]
+	},
+	{
+		"id": 3,
+		"name": "Megh",
+		"notes": ["S", "R", "M", "P", "n", "s"]
+	},
+	{
+		"id": 4,
+		"name": "Malkauns",
+		"notes": ["S", "g", "M", "d", "n", "s"]
+	},
+	{
+		"id": 5,
+		"name": "Madhukauns",
+		"notes": ["S", "g", "m", "P", "n", "s"]
+	},
+	{
+		"id": 6,
+		"name": "Chandrakauns",
+		"notes": ["S", "g", "M", "d", "N", "s"]
+	}
+]
