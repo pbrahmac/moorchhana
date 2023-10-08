@@ -1,4 +1,4 @@
-import firebase from 'firebase/app';
+import firebase, { initializeApp } from 'firebase/app';
 import { getDatabase } from 'firebase/database';
 import {
 	FIREBASE_API_KEY,
@@ -17,6 +17,6 @@ const firebaseConfig = {
 	appId: FIREBASE_APP_ID
 };
 
-const app = firebase.initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 
 export const db = getDatabase(app);
