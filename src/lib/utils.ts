@@ -8,6 +8,8 @@ export type MenuItem = { title: string; link: string };
 
 export type CompareResult = { isMatch: boolean; start: number };
 
+export type CompareObject = { raagName: string; startNote: number };
+
 export type RawRaagObject = {
 	id: string;
 	name: string;
@@ -19,7 +21,7 @@ export type RaagObject = {
 	name: string;
 	notes: string[];
 	distances: number[];
-	moorchhana: CompareResult[];
+	moorchhana: CompareObject[];
 };
 
 // variables
