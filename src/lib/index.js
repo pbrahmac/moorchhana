@@ -6,9 +6,13 @@ import ViewTransition from './components/view-transition-api/ViewTransition.svel
 import KeyboardNotes from './components/KeyboardNotes.svelte';
 import RaagCard from './components/RaagCard.svelte';
 import CompactModeSwitch from './components/navbar/CompactModeSwitch.svelte';
+import AddRaagDialog from './components/AddRaagDialog.svelte';
+import FormKeyboardNotes from './components/FormKeyboardNotes.svelte';
 
 export {
+	AddRaagDialog,
 	CompactModeSwitch,
+	FormKeyboardNotes,
 	KeyboardNotes,
 	Navbar,
 	LightSwitch,

@@ -175,3 +175,14 @@ export const compareDistanceArrays = (first: number[], second: number[]): Compar
 
 	return { isMatch: false, start: 0 };
 };
+
+export const areArraysEqual = (a: any[], b: any[]) => {
+	if (a === b) return true;
+	if (a == null || b == null) return false;
+	if (a.length !== b.length) return false;
+
+	for (var i = 0; i < a.length; ++i) {
+		if (a[i] !== b[i]) return false;
+	}
+	return true;
+};
