@@ -1,7 +1,7 @@
 import raags from '$lib/raags.json';
 import { findDistanceArray } from '$lib/utils';
 import { db } from '$lib/firebase';
-import { onValue, ref } from 'firebase/database';
+import { child, get, onValue, ref } from 'firebase/database';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load() {
@@ -11,13 +11,24 @@ export async function load() {
 	 */
 	let firebaseDataVar;
 	const firebasePath = ref(db, 'raags/');
-	onValue(firebasePath, (snapshot) => {
-		const firebaseData = snapshot.val();
-		firebaseDataVar = firebaseData;
-	});
+	// onValue(firebasePath, (snapshot) => {
+	// 	const firebaseData = snapshot.val();
+	// 	firebaseDataVar = firebaseData;
+	// });
+
+	/**
+	 * @type {{id: number; name: string; notes: string[];}[] | undefined}
+	 */
+	const data = (await get(firebasePath)).val();
 
 	// fetch object of raag data
-	let raagsObj = firebaseDataVar ?? [];
+	let raagsObj = data ?? [
+		{
+			id: 'test',
+			name: 'test',
+			notes: ['S', 'r', 'R', 'G']
+		}
+	];
 
 	// calculate distances for each raag
 	const newRaagsObj = raagsObj.map((obj) => {
