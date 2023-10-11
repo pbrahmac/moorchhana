@@ -4,7 +4,8 @@
 	import type { Writable } from 'svelte/store';
 	import { slide } from 'svelte/transition';
 	import type { MenuItem } from '$lib/utils';
-	import LightSwitch from './LightSwitch.svelte';
+	import { CompactModeSwitch, LightSwitch } from '$lib';
+	import { Separator } from '$lib/components/ui/separator';
 
 	// props
 	export let darkModeStore: Writable<boolean>;
@@ -47,5 +48,9 @@
 				>
 			</li>
 		{/each}
+		<div class="flex items-center justify-center py-2 w-full">
+			<Separator class="w-1/3" />
+		</div>
+		<CompactModeSwitch />
 	</ul>
 {/if}

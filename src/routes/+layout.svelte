@@ -1,7 +1,7 @@
 <script lang="ts">
 	import '../app.postcss';
 	import { Navbar, ViewTransition } from '$lib';
-	import { onMount } from 'svelte';
+	import { onMount, setContext } from 'svelte';
 	import { writable, type Writable } from 'svelte/store';
 
 	// dark mode toggle stuff
@@ -19,6 +19,10 @@
 			darkModeStore.set(false);
 		}
 	});
+
+	// compact mode toggle stuff (using Context API)
+	let compactModeStore: Writable<boolean> = writable(false);
+	setContext('compactMode', compactModeStore);
 </script>
 
 <div class="main">

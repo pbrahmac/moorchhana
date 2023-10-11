@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { cn } from '$lib/utils';
+	import { cn, onKeyDown } from '$lib/utils';
 	import { Moon, Sun } from 'radix-icons-svelte';
 	import type { Writable } from 'svelte/store';
 
@@ -10,13 +10,6 @@
 
 	// props
 	export let darkModeStore: Writable<boolean>;
-
-	function onKeyDown(event: OnKeyDownEvent): void {
-		if (['Enter', 'Space'].includes(event.code)) {
-			event.preventDefault();
-			event.currentTarget.click();
-		}
-	}
 
 	const switchLightMode = () => {
 		window.document.documentElement.classList.toggle('dark');
