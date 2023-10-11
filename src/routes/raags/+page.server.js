@@ -20,5 +20,5 @@ export async function load() {
 		...raag
 	}));
 
-	return { raags: raags };
+	return { raags: raags.sort((a, b) => a.name.localeCompare(b.name)) };
 }

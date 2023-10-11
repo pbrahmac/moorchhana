@@ -1,9 +1,8 @@
 import { areArraysEqual, findDistanceArray } from '$lib/utils';
 import { db } from '$lib/firebase';
 import { get, ref } from 'firebase/database';
-import { superValidate } from 'sveltekit-superforms/client';
+import { setError, superValidate } from 'sveltekit-superforms/client';
 import { addRaagSchema } from '$lib/schemas';
-import { z } from 'zod';
 import { fail } from '@sveltejs/kit';
 
 /** @type {import('./$types').PageServerLoad} */
@@ -19,7 +18,7 @@ export async function load() {
 	/**
 	 * @type {import('$lib/utils').RaagObject[]}
 	 */
-	const raags =
+	let raags =
 		rawRaags?.map((obj) => {
 			return {
 				distances: findDistanceArray(obj.notes),
@@ -30,7 +29,10 @@ export async function load() {
 
 	const addRaagForm = await superValidate(addRaagSchema);
 
-	return { raags: raags, addRaagForm: addRaagForm };
+	return {
+		raags: raags.sort((a, b) => a.name.localeCompare(b.name)),
+		addRaagForm: addRaagForm
+	};
 }
 
 /** @type {import('./$types').Actions} */
@@ -38,10 +40,9 @@ export const actions = {
 	addRaag: async (event) => {
 		// fetch raag list from Firebase
 		/**
-		 * @type {import('$lib/utils').RawRaagObject[] | undefined}
+		 * @type {import('$lib/utils').RawRaagObject[]}
 		 */
 		const rawRaags = (await get(ref(db, 'raags/'))).val();
-
 		const [raagNames, raagNotes] = [
 			rawRaags?.map((obj) => obj.name),
 			rawRaags?.map((obj) => obj.notes)
@@ -50,10 +51,33 @@ export const actions = {
 		// validate form submission
 		const form = await superValidate(event, addRaagSchema);
 
-		console.log(form.data);
-
 		if (!form.valid) {
 			return fail(400, { form });
 		}
+
+		// get notes array
+		/**
+		 * @type {string[]}
+		 */
+		let notes = [];
+		Object.entries(form.data).forEach(([k, v]) => {
+			if (k !== 'name' && v) {
+				notes.push(k);
+			}
+		});
+
+		// check if raag already exists in Firebase
+		if (raagNames.includes(form.data.name)) {
+			return setError(form, 'name', 'Raag name already exists.', { status: 400 });
+		} else if (raagNotes.find((item) => areArraysEqual(item, notes))) {
+			return setError(form, 'name', 'Raag notes already exist.', { status: 400 });
+		}
+
+		console.log('Form validated!');
+
+		// calculate distance array
+		const distanceArr = findDistanceArray(notes);
+
+		// find moorchhana pairings
 	}
 };
