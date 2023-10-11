@@ -1,10 +1,9 @@
 <script lang="ts">
-	import KeyboardNotes from '$lib/components/KeyboardNotes.svelte';
-	import * as Card from '$lib/components/ui/card';
 	import * as Select from '$lib/components/ui/select';
 	import { compareDistanceArrays } from '$lib/utils';
 	import type { PageData } from './$types';
 	import { writable } from 'svelte/store';
+	import { RaagCard } from '$lib';
 
 	export let data: PageData;
 
@@ -23,7 +22,7 @@
 	};
 </script>
 
-<div class="fullPageContainer flex flex-col space-y-2 items-center p-6">
+<div class="fullPageContainer p-6 flex flex-col space-y-2 items-center">
 	<h1 class="text-4xl font-bold">Moorchhana</h1>
 	<div class="flex items-center justify-center py-8 w-full">
 		<Select.Root onSelectedChange={(event) => submitSelect(event)}>
@@ -41,20 +40,7 @@
 
 	<div class="flex flex-wrap justify-center gap-4">
 		{#each $filteredRaagStore as raag}
-			<Card.Root>
-				<Card.Header>
-					<Card.Title class="text-xl">{raag.name}</Card.Title>
-				</Card.Header>
-				<Card.Content>
-					<KeyboardNotes selectedNotes={raag.notes} />
-				</Card.Content>
-			</Card.Root>
+			<RaagCard {raag} />
 		{/each}
 	</div>
 </div>
-
-<style>
-	.fullPageContainer {
-		min-height: 100svh;
-	}
-</style>

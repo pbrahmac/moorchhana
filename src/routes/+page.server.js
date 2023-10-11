@@ -1,43 +1,28 @@
-import raags from '$lib/raags.json';
 import { findDistanceArray } from '$lib/utils';
 import { db } from '$lib/firebase';
-import { child, get, onValue, ref } from 'firebase/database';
+import { get, ref } from 'firebase/database';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load() {
 	// fetch from Firebase
-	/**
-	 * @type {{id: number; name: string; notes: string[];}[] | undefined}
-	 */
-	let firebaseDataVar;
 	const firebasePath = ref(db, 'raags/');
-	// onValue(firebasePath, (snapshot) => {
-	// 	const firebaseData = snapshot.val();
-	// 	firebaseDataVar = firebaseData;
-	// });
-
 	/**
-	 * @type {{id: number; name: string; notes: string[];}[] | undefined}
+	 * @type {import('$lib/utils').RawRaagObject[] | undefined}
 	 */
-	const data = (await get(firebasePath)).val();
-
-	// fetch object of raag data
-	let raagsObj = data ?? [
-		{
-			id: 'test',
-			name: 'test',
-			notes: ['S', 'r', 'R', 'G']
-		}
-	];
+	const rawRaags = (await get(firebasePath)).val();
 
 	// calculate distances for each raag
-	const newRaagsObj = raagsObj.map((obj) => {
-		return {
-			distances: findDistanceArray(obj.notes),
-			moorchhana: [],
-			...obj
-		};
-	});
+	/**
+	 * @type {import('$lib/utils').RaagObject[]}
+	 */
+	const raags =
+		rawRaags?.map((obj) => {
+			return {
+				distances: findDistanceArray(obj.notes),
+				moorchhana: [],
+				...obj
+			};
+		}) ?? [];
 
-	return { raags: newRaagsObj };
+	return { raags: raags };
 }

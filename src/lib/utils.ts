@@ -3,6 +3,25 @@ import { twMerge } from 'tailwind-merge';
 import { cubicOut } from 'svelte/easing';
 import type { TransitionConfig } from 'svelte/transition';
 
+// types
+export type MenuItem = { title: string; link: string };
+
+export type CompareResult = { isMatch: boolean; start: number };
+
+export type RawRaagObject = {
+	id: string;
+	name: string;
+	notes: string[];
+};
+
+export type RaagObject = {
+	id: string;
+	name: string;
+	notes: string[];
+	distances: number[];
+	moorchhana: CompareResult[];
+};
+
 // variables
 export const noteMap = new Map([
 	['S', { short: 'Sā', long: 'Shadaj (Madhya)', row: 'top' }],
@@ -98,7 +117,7 @@ export const findDistanceArray = (notes: string[]) => {
 	return distanceArr;
 };
 
-export const compareDistanceArrays = (first: number[], second: number[]) => {
+export const compareDistanceArrays = (first: number[], second: number[]): CompareResult => {
 	// non-optimal cases
 	if (first.length !== second.length) {
 		return { isMatch: false, start: 0 };

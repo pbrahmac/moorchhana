@@ -8,7 +8,7 @@
 	const notes = [...noteMap.entries()].map((arr) => ({ note: arr[0], properties: arr[1] }));
 </script>
 
-<div class="flex flex-col rounded-lg lg:px-4 py-2 aspect-video max-w-xs lg:w-full">
+<div class="flex flex-col rounded-lg lg:px-4 py-2 aspect-video max-w-xs lg:max-w-full">
 	<div class="flex">
 		{#each notes as { note, properties }, idx}
 			{#if properties.row === 'top'}
