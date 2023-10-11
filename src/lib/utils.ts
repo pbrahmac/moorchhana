@@ -97,6 +97,17 @@ export const flyAndScale = (
 };
 
 /**
+ * Function to trigger a click on key down (for accessibility)
+ * @param event HTML key down event
+ */
+export const onKeyDown = (event: any): void => {
+	if (['Enter', 'Space'].includes(event.code)) {
+		event.preventDefault();
+		event.currentTarget.click();
+	}
+};
+
+/**
  *
  * @param letter Letter representing the note to be converted to a full name
  * @param isLongFormat Whether to return a short or long name (short: Sa, long: Shadaj)
