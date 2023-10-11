@@ -30,7 +30,6 @@
 				const moorchhana = { raagName: $selectedRaag?.name, startNote: 12 - compare.start };
 				if (!raag.moorchhana.find((obj) => obj.raagName === $selectedRaag?.name)) {
 					raag.moorchhana.push(moorchhana);
-					// selectedRaag?.moorchhana.push({ raagName: raag.name, startNote: compare.start });
 				}
 			}
 			return compare.isMatch;
@@ -40,7 +39,6 @@
 </script>
 
 <div class="fullPageContainer p-6 flex flex-col items-center">
-	<!-- <h1 class="text-4xl font-bold">Moorchhana</h1> -->
 	<div class="flex items-center justify-center py-8 w-full">
 		<Select.Root onSelectedChange={(event) => submitSelect(event)}>
 			<Select.Trigger class="max-w-lg">

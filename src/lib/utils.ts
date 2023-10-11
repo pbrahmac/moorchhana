@@ -96,6 +96,12 @@ export const flyAndScale = (
 	};
 };
 
+/**
+ *
+ * @param letter Letter representing the note to be converted to a full name
+ * @param isLongFormat Whether to return a short or long name (short: Sa, long: Shadaj)
+ * @returns A string containing the full name (long or short) of the inputted letter
+ */
 export const noteLetterToName = (letter: string, isLongFormat: boolean = false) => {
 	const ret = noteMap.get(letter);
 	if (ret) {
@@ -105,6 +111,11 @@ export const noteLetterToName = (letter: string, isLongFormat: boolean = false) 
 	}
 };
 
+/**
+ *
+ * @param notes the array of notes in a raag
+ * @returns An array containing the distances between each neighboring pair of notes
+ */
 export const findDistanceArray = (notes: string[]) => {
 	const distanceArr: number[] = [];
 
@@ -119,6 +130,12 @@ export const findDistanceArray = (notes: string[]) => {
 	return distanceArr;
 };
 
+/**
+ *
+ * @param first array of distances between notes of first raag
+ * @param second array of distances between notes of second raag
+ * @returns An object that contains 1) if there is a match and 2) what the starting note is in case of a match
+ */
 export const compareDistanceArrays = (first: number[], second: number[]): CompareResult => {
 	// non-optimal cases
 	if (first.length !== second.length) {

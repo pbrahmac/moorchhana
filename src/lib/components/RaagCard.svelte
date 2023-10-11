@@ -1,30 +1,27 @@
 <script lang="ts">
 	import * as Card from '$lib/components/ui/card';
+	import { Badge } from '$lib/components/ui/badge';
 	import { KeyboardNotes } from '$lib';
 	import { allNotes, noteLetterToName, type RaagObject } from '$lib/utils';
 
 	// props
 	export let raag: RaagObject;
 	export let selectedRaag: RaagObject | undefined = undefined;
+
+	const filter = raag.moorchhana.find((moorchhana) => moorchhana.raagName === selectedRaag?.name);
+	const startingNote = filter ? filter.startNote : undefined;
 </script>
 
 <Card.Root>
 	<Card.Header>
-		<Card.Title class="text-xl">{raag.name}</Card.Title>
+		<div class="flex items-center justify-between space-x-4">
+			<Card.Title class="text-xl">{raag.name}</Card.Title>
+			{#if startingNote}
+				<Badge>{noteLetterToName(allNotes.at(startingNote) ?? '')}</Badge>
+			{/if}
+		</div>
 	</Card.Header>
 	<Card.Content>
 		<KeyboardNotes selectedNotes={raag.notes} />
-		{#if selectedRaag}
-			{@const startNotes = raag.moorchhana
-				.filter((moorchhana) => moorchhana.raagName === selectedRaag?.name)
-				.map((obj) => obj.startNote)}
-			{#each startNotes as note}
-				<ul>
-					<li>
-						{`Start on ${noteLetterToName(allNotes.at(note) ?? '')} of ${selectedRaag?.name}`}
-					</li>
-				</ul>
-			{/each}
-		{/if}
 	</Card.Content>
 </Card.Root>
