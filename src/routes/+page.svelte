@@ -5,7 +5,6 @@
 	import type { PageData } from './$types';
 	import { writable, type Writable } from 'svelte/store';
 	import { AddRaagDialog, RaagCard } from '$lib';
-	import { addRaagSchema } from '$lib/schemas';
 
 	export let data: PageData;
 

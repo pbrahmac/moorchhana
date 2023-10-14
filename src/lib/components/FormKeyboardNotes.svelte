@@ -26,9 +26,9 @@
 	</div>
 {:else}
 	<div
-		class="lg:border-2 lg:shadow-inner flex flex-col items-center justify-center rounded-lg py-4 w-full"
+		class="lg:border-2 lg:shadow-inner flex flex-col items-center justify-center aspect-video rounded-lg"
 	>
-		<div class="flex">
+		<div class="flex w-full justify-center">
 			{#each notes as { note, properties }, idx}
 				{#if properties.row === 'top'}
 					<Form.Field {config} name={note}>
@@ -43,7 +43,7 @@
 				{/if}
 			{/each}
 		</div>
-		<div class="flex">
+		<div class="flex w-full justify-center">
 			{#each notes as { note, properties }}
 				{#if properties.row === 'bottom'}
 					<Form.Field {config} name={note}>
@@ -54,7 +54,7 @@
 						</Form.Item>
 					</Form.Field>
 				{:else}
-					<div class="first:w-6 w-4 h-20" />
+					<div class="w-4 h-20" />
 				{/if}
 			{/each}
 		</div>

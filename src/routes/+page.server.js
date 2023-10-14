@@ -1,12 +1,15 @@
-import { areArraysEqual, findDistanceArray } from '$lib/utils';
+import { areArraysEqual, findDistanceArray, makeCamelCase } from '$lib/utils';
 import { db } from '$lib/firebase';
-import { get, ref } from 'firebase/database';
+import { get, ref, set } from 'firebase/database';
 import { setError, superValidate } from 'sveltekit-superforms/client';
 import { addRaagSchema } from '$lib/schemas';
 import { fail } from '@sveltejs/kit';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load() {
+	// init form
+	const addRaagForm = await superValidate(addRaagSchema);
+
 	// fetch from Firebase
 	const firebasePath = ref(db, 'raags/');
 	/**
@@ -21,13 +24,10 @@ export async function load() {
 	let raags =
 		rawRaags?.map((obj) => {
 			return {
-				distances: findDistanceArray(obj.notes),
 				moorchhana: [],
 				...obj
 			};
 		}) ?? [];
-
-	const addRaagForm = await superValidate(addRaagSchema);
 
 	return {
 		raags: raags.sort((a, b) => a.name.localeCompare(b.name)),
@@ -38,16 +38,6 @@ export async function load() {
 /** @type {import('./$types').Actions} */
 export const actions = {
 	addRaag: async (event) => {
-		// fetch raag list from Firebase
-		/**
-		 * @type {import('$lib/utils').RawRaagObject[]}
-		 */
-		const rawRaags = (await get(ref(db, 'raags/'))).val();
-		const [raagNames, raagNotes] = [
-			rawRaags?.map((obj) => obj.name),
-			rawRaags?.map((obj) => obj.notes)
-		];
-
 		// validate form submission
 		const form = await superValidate(event, addRaagSchema);
 
@@ -61,10 +51,20 @@ export const actions = {
 		 */
 		let notes = [];
 		Object.entries(form.data).forEach(([k, v]) => {
-			if (k !== 'name' && v) {
+			if ((k !== 'name' && v) || (k === 's' && form.data.S)) {
 				notes.push(k);
 			}
 		});
+
+		// fetch raag list from Firebase for validation
+		/**
+		 * @type {import('$lib/utils').RawRaagObject[]}
+		 */
+		const rawRaags = (await get(ref(db, 'raags/'))).val() ?? [];
+		const [raagNames, raagNotes] = [
+			rawRaags?.map((obj) => obj.name),
+			rawRaags?.map((obj) => obj.notes)
+		];
 
 		// check if raag already exists in Firebase
 		if (raagNames.includes(form.data.name)) {
@@ -73,11 +73,17 @@ export const actions = {
 			return setError(form, 'name', 'Raag notes already exist.', { status: 400 });
 		}
 
-		console.log('Form validated!');
+		// set up data object to push to db
+		const dataObj = {
+			id: makeCamelCase(form.data.name),
+			name: form.data.name,
+			notes: notes,
+			distances: findDistanceArray(notes)
+		};
 
-		// calculate distance array
-		const distanceArr = findDistanceArray(notes);
+		// write to Firebase
+		set(ref(db, 'raags/' + rawRaags.length), dataObj);
 
-		// find moorchhana pairings
+		return { form };
 	}
 };

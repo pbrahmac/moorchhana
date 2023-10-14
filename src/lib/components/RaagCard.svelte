@@ -8,7 +8,7 @@
 	export let raag: RaagObject;
 	export let selectedRaag: RaagObject | undefined = undefined;
 
-	const startingNote = raag.moorchhana.find(
+	$: startingNote = raag.moorchhana.find(
 		(moorchhana) => moorchhana.raagName === selectedRaag?.name
 	)?.startNote;
 </script>
