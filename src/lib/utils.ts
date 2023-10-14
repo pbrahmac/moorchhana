@@ -14,6 +14,7 @@ export type RawRaagObject = {
 	id: string;
 	name: string;
 	notes: string[];
+	distances: number[];
 };
 
 export type RaagObject = {
@@ -174,4 +175,31 @@ export const compareDistanceArrays = (first: number[], second: number[]): Compar
 	}
 
 	return { isMatch: false, start: 0 };
+};
+
+/**
+ *
+ * @param a first array to compare
+ * @param b second array to compare
+ * @returns whether the two arrays are equal or not (each element is the same)
+ */
+export const areArraysEqual = (a: any[], b: any[]) => {
+	if (a === b) return true;
+	if (a == null || b == null) return false;
+	if (a.length !== b.length) return false;
+
+	for (var i = 0; i < a.length; ++i) {
+		if (a[i] !== b[i]) return false;
+	}
+	return true;
+};
+
+/**
+ *
+ * @param name string to convert to camelCase
+ * @returns converted string in camelCase
+ */
+export const makeCamelCase = (name: string) => {
+	name = name.at(0)?.toLowerCase() + name.slice(1);
+	return name.replace(/[_\s-]+(.)?/g, (_, c) => (c ? c.toUpperCase() : ''));
 };

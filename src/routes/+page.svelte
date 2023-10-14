@@ -4,14 +4,14 @@
 	import { compareDistanceArrays, type RaagObject } from '$lib/utils';
 	import type { PageData } from './$types';
 	import { writable, type Writable } from 'svelte/store';
-	import { RaagCard } from '$lib';
+	import { AddRaagDialog, RaagCard } from '$lib';
 
 	export let data: PageData;
 
 	const selectedRaag: Writable<RaagObject | undefined> = writable();
 	const filteredRaagStore: Writable<RaagObject[]> = writable([]);
 
-	const submitSelect = (event: any | undefined) => {
+	const submitSelectRaag = (event: any | undefined) => {
 		if (event.value === 'default') {
 			filteredRaagStore.set([]);
 			selectedRaag.set(undefined);
@@ -39,8 +39,8 @@
 </script>
 
 <div class="fullPageContainer p-6 flex flex-col items-center">
-	<div class="flex items-center justify-center py-8 w-full">
-		<Select.Root onSelectedChange={(event) => submitSelect(event)}>
+	<div class="flex items-center justify-center space-x-4 py-8 w-full">
+		<Select.Root onSelectedChange={(event) => submitSelectRaag(event)}>
 			<Select.Trigger class="max-w-lg">
 				<Select.Value placeholder="Choose a raag" />
 			</Select.Trigger>
@@ -51,6 +51,8 @@
 				{/each}
 			</Select.Content>
 		</Select.Root>
+
+		<AddRaagDialog form={data.addRaagForm} />
 	</div>
 
 	{#if $selectedRaag}
