@@ -1,9 +1,9 @@
-import { areArraysEqual, findDistanceArray, makeCamelCase } from '$lib/utils';
 import { db } from '$lib/firebase';
+import { addRaagSchema } from '$lib/schemas';
+import { areArraysEqual, findDistanceArray, makeCamelCase } from '$lib/utils';
+import { fail } from '@sveltejs/kit';
 import { get, ref, set } from 'firebase/database';
 import { setError, superValidate } from 'sveltekit-superforms/client';
-import { addRaagSchema } from '$lib/schemas';
-import { fail } from '@sveltejs/kit';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load() {

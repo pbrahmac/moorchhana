@@ -1,11 +1,10 @@
 <script lang="ts">
+	import { CompactModeSwitch, LightSwitch, SignInButton } from '$lib';
 	import { Button } from '$lib/components/ui/button';
-	import { HamburgerMenu, Cross1 } from 'radix-icons-svelte';
+	import type { MenuItem } from '$lib/utils';
+	import { Cross1, HamburgerMenu } from 'radix-icons-svelte';
 	import type { Writable } from 'svelte/store';
 	import { slide } from 'svelte/transition';
-	import type { MenuItem } from '$lib/utils';
-	import { CompactModeSwitch, LightSwitch } from '$lib';
-	import { Separator } from '$lib/components/ui/separator';
 
 	// props
 	export let darkModeStore: Writable<boolean>;
@@ -25,6 +24,7 @@
 		>moorchhana</a
 	>
 	<div class="flex items-center space-x-2 last:mr-6">
+		<CompactModeSwitch />
 		<LightSwitch {darkModeStore} />
 		<Button variant="ghost" size="sm" on:click={() => (isMenuOpen = !isMenuOpen)}>
 			{#if isMenuOpen}
@@ -48,9 +48,8 @@
 				>
 			</li>
 		{/each}
-		<div class="flex items-center justify-center py-2 w-full">
-			<Separator class="w-1/3" />
-		</div>
-		<CompactModeSwitch />
+		<button on:click={() => (isMenuOpen = !isMenuOpen)}>
+			<SignInButton />
+		</button>
 	</ul>
 {/if}

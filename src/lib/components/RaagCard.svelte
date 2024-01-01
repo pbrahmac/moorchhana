@@ -1,7 +1,7 @@
 <script lang="ts">
-	import * as Card from '$lib/components/ui/card';
-	import { Badge } from '$lib/components/ui/badge';
 	import { KeyboardNotes } from '$lib';
+	import { Badge } from '$lib/components/ui/badge';
+	import * as Card from '$lib/components/ui/card';
 	import { allNotes, noteLetterToName, type RaagObject } from '$lib/utils';
 
 	// props

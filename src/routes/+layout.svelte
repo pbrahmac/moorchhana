@@ -1,8 +1,9 @@
 <script lang="ts">
-	import '../app.postcss';
 	import { Navbar, ViewTransition } from '$lib';
+	import type { User } from 'firebase/auth';
 	import { onMount, setContext } from 'svelte';
 	import { writable, type Writable } from 'svelte/store';
+	import '../app.postcss';
 
 	// dark mode toggle stuff
 	let darkModeStore: Writable<boolean>;
@@ -20,9 +21,13 @@
 		}
 	});
 
-	// compact mode toggle stuff (using Context API)
+	// compact mode toggle (using Context API)
 	let compactModeStore: Writable<boolean> = writable(false);
 	setContext('compactMode', compactModeStore);
+
+	// user state (using Context API)
+	let user: Writable<User | null> = writable(null);
+	setContext('user', user);
 </script>
 
 <div class="main">

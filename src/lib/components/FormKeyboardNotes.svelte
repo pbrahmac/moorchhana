@@ -1,6 +1,5 @@
 <script lang="ts">
 	import * as Form from '$lib/components/ui/form';
-	import { Toggle } from '$lib/components/ui/toggle';
 	import { allNotes, noteMap } from '$lib/utils';
 	import { getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';

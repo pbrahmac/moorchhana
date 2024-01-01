@@ -15,9 +15,9 @@ export async function load() {
 	 * @type {import('$lib/utils').RaagObject[]}
 	 */
 	const raags = rawRaags.map((raag) => ({
+		...raag,
 		distances: findDistanceArray(raag.notes),
-		moorchhana: [],
-		...raag
+		moorchhana: []
 	}));
 
 	return { raags: raags.sort((a, b) => a.name.localeCompare(b.name)) };
