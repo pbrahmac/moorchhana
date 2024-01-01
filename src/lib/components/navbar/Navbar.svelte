@@ -11,7 +11,7 @@
 	// menu items
 	const items: MenuItem[] = [
 		{ title: 'Moorchhana Finder', link: '/' },
-		{ title: 'All Raags', link: '/raags' }
+		{ title: 'Raag Index', link: '/raags' }
 	];
 </script>
 
