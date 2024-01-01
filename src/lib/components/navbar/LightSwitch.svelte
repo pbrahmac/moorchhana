@@ -1,46 +1,31 @@
 <script lang="ts">
-	import { cn, onKeyDown } from '$lib/utils';
+	import { Button } from '$lib/components/ui/button';
+	import * as Tooltip from '$lib/components/ui/tooltip';
 	import { Moon, Sun } from 'radix-icons-svelte';
 	import type { Writable } from 'svelte/store';
-
-	// types
-	type OnKeyDownEvent = KeyboardEvent & {
-		currentTarget: EventTarget & HTMLDivElement;
-	};
 
 	// props
 	export let darkModeStore: Writable<boolean>;
 
 	const switchLightMode = () => {
 		window.document.documentElement.classList.toggle('dark');
-		if ($darkModeStore) {
-			darkModeStore.set(false);
-		} else {
-			darkModeStore.set(true);
-		}
+		$darkModeStore = !$darkModeStore;
 	};
 </script>
 
-<div
-	on:click={switchLightMode}
-	on:keydown={onKeyDown}
-	role="switch"
-	aria-label="Light Switch"
-	aria-checked="false"
-	title="Toggle Dark Mode"
-	tabindex="0"
->
-	<div
-		class={cn(
-			'flex items-center justify-center w-10 h-10 rounded-md transition-colors hover:bg-secondary'
-		)}
-	>
-		{#if $darkModeStore}
-			<Sun class="h-5 w-5" />
-			<span class="sr-only">Light</span>
-		{:else}
-			<Moon class="h-5 w-5" />
-			<span class="sr-only">Dark</span>
-		{/if}
-	</div>
+<div class="flex items-center justify-center">
+	<Tooltip.Root>
+		<Tooltip.Trigger>
+			<Button variant="ghost" on:click={switchLightMode}>
+				{#if $darkModeStore}
+					<Sun class="h-5 w-5" />
+					<span class="sr-only">Light</span>
+				{:else}
+					<Moon class="h-5 w-5" />
+					<span class="sr-only">Dark</span>
+				{/if}
+			</Button>
+		</Tooltip.Trigger>
+		<Tooltip.Content>Toggle dark mode</Tooltip.Content>
+	</Tooltip.Root>
 </div>

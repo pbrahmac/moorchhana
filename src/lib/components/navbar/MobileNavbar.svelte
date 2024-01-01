@@ -1,11 +1,11 @@
 <script lang="ts">
+	import { CompactModeSwitch, LightSwitch } from '$lib';
 	import { Button } from '$lib/components/ui/button';
-	import { HamburgerMenu, Cross1 } from 'radix-icons-svelte';
+	import { Separator } from '$lib/components/ui/separator';
+	import type { MenuItem } from '$lib/utils';
+	import { Cross1, HamburgerMenu } from 'radix-icons-svelte';
 	import type { Writable } from 'svelte/store';
 	import { slide } from 'svelte/transition';
-	import type { MenuItem } from '$lib/utils';
-	import { CompactModeSwitch, LightSwitch } from '$lib';
-	import { Separator } from '$lib/components/ui/separator';
 
 	// props
 	export let darkModeStore: Writable<boolean>;

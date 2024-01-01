@@ -1,12 +1,9 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { Label } from '$lib/components/ui/label';
+	import { CompactModeSwitch, LightSwitch, MobileNavbar, SignInButton } from '$lib';
 	import { Separator } from '$lib/components/ui/separator';
-	import { Switch } from '$lib/components/ui/switch/';
-	import { LightSwitch, MobileNavbar } from '$lib';
-	import type { Writable } from 'svelte/store';
 	import type { MenuItem } from '$lib/utils';
-	import CompactModeSwitch from './CompactModeSwitch.svelte';
+	import type { Writable } from 'svelte/store';
 
 	// props
 	export let darkModeStore: Writable<boolean>;
@@ -44,7 +41,8 @@
 		</ul>
 		<Separator orientation="vertical" />
 		<CompactModeSwitch />
-		<Separator orientation="vertical" />
 		<LightSwitch {darkModeStore} />
+		<Separator orientation="vertical" />
+		<SignInButton />
 	</div>
 </nav>
