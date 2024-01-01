@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { PageData } from './$types';
 	import { RaagCard } from '$lib';
+	import type { PageData } from './$types';
 
 	// props
 	export let data: PageData;

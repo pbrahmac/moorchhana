@@ -3,8 +3,6 @@
 	import * as Select from '$lib/components/ui/select';
 	import { Separator } from '$lib/components/ui/separator';
 	import { compareDistanceArrays, type RaagObject } from '$lib/utils';
-	import type { User } from 'firebase/auth';
-	import { getContext } from 'svelte';
 	import { writable, type Writable } from 'svelte/store';
 	import type { PageData } from './$types';
 

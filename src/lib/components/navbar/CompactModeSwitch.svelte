@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
+	import * as Tooltip from '$lib/components/ui/tooltip';
 	import { KeyboardMusic, SquareStack } from 'lucide-svelte';
 	import { getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';
-	import * as Tooltip from '$lib/components/ui/tooltip';
 
 	// use Context API to get compact mode store
 	const compactModeStore: Writable<boolean> = getContext('compactMode');

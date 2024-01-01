@@ -17,8 +17,6 @@
 		signOut(auth);
 		$user = null;
 	};
-
-	$: console.log($user);
 </script>
 
 <div>
