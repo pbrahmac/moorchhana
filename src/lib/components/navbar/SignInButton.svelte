@@ -8,8 +8,8 @@
 	const user: Writable<User | null> = getContext('user');
 
 	const loginWithGoogle = () => {
-		signInWithPopup(auth, new GoogleAuthProvider()).then((userCredential) => {
-			$user = userCredential.user;
+		signInWithPopup(auth, new GoogleAuthProvider()).then((result) => {
+			$user = result.user;
 		});
 	};
 

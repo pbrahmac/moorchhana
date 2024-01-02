@@ -1,5 +1,7 @@
 import { clsx, type ClassValue } from 'clsx';
+import { tick } from 'svelte';
 import { cubicOut } from 'svelte/easing';
+import type { Writable } from 'svelte/store';
 import type { TransitionConfig } from 'svelte/transition';
 import { twMerge } from 'tailwind-merge';
 
@@ -95,6 +97,13 @@ export const flyAndScale = (
 		},
 		easing: cubicOut
 	};
+};
+
+export const closeAndFocusTrigger = (state: Writable<boolean>, triggerId: string) => {
+	state.set(false);
+	tick().then(() => {
+		document.getElementById(triggerId)?.focus();
+	});
 };
 
 /**

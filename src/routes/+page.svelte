@@ -4,9 +4,8 @@
 	import * as Command from '$lib/components/ui/command';
 	import * as Popover from '$lib/components/ui/popover';
 	import { Separator } from '$lib/components/ui/separator';
-	import { cn, compareDistanceArrays, type RaagObject } from '$lib/utils';
+	import { closeAndFocusTrigger, cn, compareDistanceArrays, type RaagObject } from '$lib/utils';
 	import { CaretSort, Check } from 'radix-icons-svelte';
-	import { tick } from 'svelte';
 	import { writable, type Writable } from 'svelte/store';
 	import type { PageData } from './$types';
 
@@ -15,20 +14,12 @@
 	const selectedRaag: Writable<RaagObject | undefined> = writable();
 	const filteredRaagStore: Writable<RaagObject[]> = writable([]);
 
-	// combobox stuff
-	let open = false;
-	// let value = '';
-
-	const closeAndFocusTrigger = (triggerId: string) => {
-		open = false;
-		tick().then(() => {
-			document.getElementById(triggerId)?.focus();
-		});
-	};
+	// combobox open state
+	let open = writable(false);
 
 	const submitSelectRaag = (currentValue: string) => {
 		if (currentValue === 'default') {
-			filteredRaagStore.set([]);
+			$filteredRaagStore = [];
 			$selectedRaag = undefined;
 			return;
 		}
@@ -55,13 +46,13 @@
 
 <div class="fullPageContainer p-6 flex flex-col items-center">
 	<div class="flex items-center justify-center space-x-4 py-8 w-full">
-		<Popover.Root bind:open let:ids>
+		<Popover.Root bind:open={$open} let:ids>
 			<Popover.Trigger asChild let:builder>
 				<Button
 					builders={[builder]}
 					variant="outline"
 					role="combobox"
-					aria-expanded={open}
+					aria-expanded={$open}
 					class="max-w-lg justify-between"
 				>
 					{$selectedRaag?.name ?? 'Choose a raag'}
@@ -77,7 +68,7 @@
 							value="default"
 							onSelect={(currentValue) => {
 								submitSelectRaag(currentValue);
-								closeAndFocusTrigger(ids.trigger);
+								closeAndFocusTrigger(open, ids.trigger);
 							}}
 						>
 							<Check class={cn('mr-2 h-4 w-4', $selectedRaag && 'text-transparent')} />
@@ -88,7 +79,7 @@
 								value={raag.id}
 								onSelect={(currentValue) => {
 									submitSelectRaag(currentValue);
-									closeAndFocusTrigger(ids.trigger);
+									closeAndFocusTrigger(open, ids.trigger);
 								}}
 							>
 								<Check
